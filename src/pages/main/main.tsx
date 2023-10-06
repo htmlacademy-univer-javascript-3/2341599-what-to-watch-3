@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import FilmCard from '../../components/filmCard/filmCard';
 import SelectedFilm from '../../components/selectedFilm/selectedFilm';
 import { FilmCardType, SelectedFilmType } from '../../types/main';
@@ -10,6 +11,9 @@ type StartProps = {
 export default function Start({ CardsFilm, SelectedFilmItem}: StartProps): JSX.Element {
   return (
     <>
+      <Helmet>
+        <title>WTW</title>
+      </Helmet>
       <section className="film-card">
         <div className="film-card__bg">
           <img src={SelectedFilmItem.backgroundImage} alt={SelectedFilmItem.name} />

@@ -2,11 +2,11 @@
 
 import { Helmet } from 'react-helmet-async';
 
-export default function Film(): JSX.Element{
+export default function AddReview(): JSX.Element{
   //const params = useParams();
   return (
     <Helmet>
-      <title>Film</title>
+      <title>AddReview</title>
     </Helmet>
   );
 }

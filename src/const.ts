@@ -1,5 +1,5 @@
-import { SelectedFilmType } from '../types/main';
-import { FilmCardType } from '../types/main';
+import { SelectedFilmType } from './types/main';
+import { FilmCardType } from './types/main';
 
 
 export const CardsFilm: Array<FilmCardType> = [
@@ -207,3 +207,20 @@ export const SelectedFilmItem: SelectedFilmType = { // film in header from API
   released: 2014,
   isFavorite: false
 };
+
+export enum AppRoute {
+  Main = '/',
+  SignIn = '/login',
+  MyList = '/mylist',
+  Film = '/films/:id',
+  AddReview = '/films/:id/review',
+  Player = '/player/:id',
+  PageNotFound = '*'
+}
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
+}
+
