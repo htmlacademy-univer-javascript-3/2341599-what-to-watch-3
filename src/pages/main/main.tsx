@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
-import FilmCard from '../../components/filmCard/filmCard';
 import SelectedFilm from '../../components/selectedFilm/selectedFilm';
 import { FilmCardType, SelectedFilmType } from '../../types/main';
+import FilmList from '../../components/filmsList/filmList';
 
 type StartProps = {
   CardsFilm: Array<FilmCardType>;
@@ -81,9 +81,7 @@ export default function Start({ CardsFilm, SelectedFilmItem}: StartProps): JSX.E
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {CardsFilm.map((el)=>(<FilmCard key = {el.id} name={el.name} previewImage={el.previewImage}/>))}
-          </div>
+          <FilmList filmsList={CardsFilm}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
