@@ -12,13 +12,18 @@ import Player from '../../pages/player/[id].tsx';
 import PageNotFound from '../../pages/pageNotFound/pageNotFound.tsx';
 import PrivateRoute from '../privateRoute/privateRoute.tsx';
 import { HelmetProvider } from 'react-helmet-async';
+import { AddReviewFilmType, SeeReviewFilmType } from '../../types/films.ts';
 
 type AppProps = {
   CardsFilm: Array<FilmCardType>;
   SelectedFilmItem: SelectedFilmType;
+  video: string;
+  reviewFilm: AddReviewFilmType;
+  selectedFilm: SelectedFilmType;
+  seeReviewsFilm: Array<SeeReviewFilmType>;
 }
 
-export default function App({CardsFilm, SelectedFilmItem} : AppProps) : JSX.Element{
+export default function App({CardsFilm, SelectedFilmItem, video, reviewFilm, selectedFilm, seeReviewsFilm} : AppProps) : JSX.Element{
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -26,15 +31,15 @@ export default function App({CardsFilm, SelectedFilmItem} : AppProps) : JSX.Elem
           <Route path={AppRoute.Main} element={<Main SelectedFilmItem={SelectedFilmItem} CardsFilm={CardsFilm}/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn/>}/>
           <Route path={AppRoute.MyList} element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <MyList/>
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <MyList CardsFilm={CardsFilm}/>
             </PrivateRoute>
           }
           />
-          <Route path={AppRoute.Film} element={<Film/>}/>
-          <Route path={AppRoute.AddReview} element={<AddReview/>}/>
-          <Route path={AppRoute.Player} element={<Player/>}/>
-          <Route path={AppRoute.PageNotFound} element={<PageNotFound/>}/>
+          <Route path={AppRoute.Film} element={<Film selectedFilm={selectedFilm} seeReviewsFilm={seeReviewsFilm}/>}/>
+          <Route path={AppRoute.AddReview} element={<AddReview reviewFilm={reviewFilm} />}/>
+          <Route path={AppRoute.Player} element={<Player video={video}/>}/>
+          <Route path={'*'} element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
