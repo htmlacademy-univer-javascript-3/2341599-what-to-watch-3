@@ -13,8 +13,7 @@ export default function Player({video}:PlayerProps): JSX.Element{
     if (isPlaying && videoPlayer.current !== null){
       setIsPlaying(false);
       videoPlayer.current.pause();
-    }
-    else if(videoPlayer.current !== null){
+    } else if(videoPlayer.current !== null){
       setIsPlaying(false);
       videoPlayer.current.play();
     }
