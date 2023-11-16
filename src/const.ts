@@ -145,49 +145,6 @@ export const CardsFilm: Array<FilmCardType> = [
   },
 ];
 
-export const catalogList = [ // этот список пока не использую, думаю его надо будет генерировать при получении списка фильмов
-  {
-    name: 'All genres',
-    isActive: true
-  },
-  {
-    name: 'Comedies',
-    isActive: false
-  },
-  {
-    name: 'Crime',
-    isActive: false
-  },
-  {
-    name: 'Documentary',
-    isActive: false
-  },
-  {
-    name: 'Dramas',
-    isActive: false
-  },
-  {
-    name: 'Horror',
-    isActive: false
-  },
-  {
-    name: 'Kids & Family',
-    isActive: false
-  },
-  {
-    name: 'Romance',
-    isActive: false
-  },
-  {
-    name: 'Sci-Fi',
-    isActive: false
-  },
-  {
-    name: 'Thrillers',
-    isActive: false
-  }
-];
-
 export const SelectedFilmItem: SelectedFilmType = { // film in header from API
   id: 'aba664c3-bdf3-4fb3-b8f3-42e007864bbf',
   name: 'The Grand Budapest Hotel',
@@ -223,3 +180,17 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
+export const Genres = {
+  All: 'All',
+  Comedy: 'Comedy',
+  Crime: 'Crime',
+  Documentary: 'Documentary',
+  Drama: 'Drama',
+  Horror: 'Horror',
+  KidsFamily: 'KidsFamily',
+  Romance: 'Romance',
+  SciFi: 'SciFi',
+  Thrillers: 'Thrillers',
+};
+
+export type GenresValues = keyof typeof Genres;

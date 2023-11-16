@@ -28,7 +28,7 @@ export default function App({CardsFilm, SelectedFilmItem, video, reviewFilm, sel
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Main} element={<Main SelectedFilmItem={SelectedFilmItem} CardsFilm={CardsFilm}/>}/>
+          <Route path={AppRoute.Main} element={<Main SelectedFilmItem={SelectedFilmItem}/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn/>}/>
           <Route path={AppRoute.MyList} element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
