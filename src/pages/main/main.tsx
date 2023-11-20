@@ -5,19 +5,22 @@ import FilmList from '../../components/filmsList/filmList';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Genres, GenresValues } from '../../const';
 import { changeGenre } from '../../store/action';
+import { useState } from 'react';
 
 type StartProps = {
   SelectedFilmItem: SelectedFilmType;
 }
 
-export default function Start({SelectedFilmItem}: StartProps): JSX.Element {
+const lengthSection = 8;
 
+export default function Start({SelectedFilmItem}: StartProps): JSX.Element {
   const selectedGenre = useAppSelector((state)=>state.genre);
   const filmsList = useAppSelector((state)=>state.films);
   const filteredFilms = filmsList.filter((moviePreview) =>
     selectedGenre === Genres.All
       ? moviePreview
       : moviePreview.genre === selectedGenre);
+  const [filmsSection, setFilmsSection] = useState(lengthSection);
   const dispatch = useAppDispatch();
 
   const genres = [...new Set(filmsList.map((film) => film.genre))].sort();
@@ -75,11 +78,16 @@ export default function Start({SelectedFilmItem}: StartProps): JSX.Element {
                 <a className="catalog__genres-link">{genre}</a>
               </li>))}
           </ul>
-          <FilmList filmsList={filteredFilms}/>
+          <FilmList filmsSection={filmsSection} filmsList={filteredFilms}/>
 
+          {filmsSection < filteredFilms.length &&
           <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+            <button onClick={() => {
+              setFilmsSection(lengthSection + filmsSection);
+            }} className="catalog__button" type="button"
+            >Show more
+            </button>
+          </div>}
         </section>
 
         <footer className="page-footer">

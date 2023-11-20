@@ -4,11 +4,14 @@ import FilmCard from '../filmCard/filmCard';
 
 type FilmListProps = {
   filmsList: Array<FilmCardType>;
+  filmsSection: number;
 }
 
-export default function FilmList({filmsList}:FilmListProps): JSX.Element {
+export default function FilmList({filmsList, filmsSection}:FilmListProps): JSX.Element {
 
   const [selectedFilm, setSelectedFilm] = useState('');
+
+  const newFilmsList = filmsList.slice(0, filmsSection);
 
   const changeSelectedFilm = (id:string):void=>{
     setSelectedFilm(id);
@@ -16,7 +19,7 @@ export default function FilmList({filmsList}:FilmListProps): JSX.Element {
 
   return (
     <div className="catalog__films-list">
-      {filmsList.map((el)=>(<FilmCard key={el.id} id={el.id} isSelected={el.id === selectedFilm} name={el.name} previewImage={el.previewImage} changeSelectedFilm={changeSelectedFilm}/>))}
+      {newFilmsList.map((el)=>(<FilmCard key={el.id} id={el.id} isSelected={el.id === selectedFilm} name={el.name} previewImage={el.previewImage} changeSelectedFilm={changeSelectedFilm}/>))}
     </div>
   );
 }
