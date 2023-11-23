@@ -38,7 +38,7 @@ export default function MyList({CardsFilm}: MyListProps): JSX.Element{
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          {<FilmList filmsList={CardsFilm}/>}
+          {<FilmList filmsSection={8} filmsList={CardsFilm}/>}
         </section>
 
         <footer className="page-footer">

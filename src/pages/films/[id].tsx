@@ -144,7 +144,7 @@ export default function Film({selectedFilm, seeReviewsFilm}:FilmProps): JSX.Elem
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          {<FilmList filmsList={getFlimsOfGenre(CardsFilm, selectedFilm.genre)}/>}
+          {<FilmList filmsSection={8} filmsList={getFlimsOfGenre(CardsFilm, selectedFilm.genre)}/>}
         </section>
 
         <footer className="page-footer">
