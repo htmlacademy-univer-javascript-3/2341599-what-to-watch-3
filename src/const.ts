@@ -1,6 +1,8 @@
 import { SelectedFilmType } from './types/main';
 import { FilmCardType } from './types/main';
 
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 
 export const CardsFilm: Array<FilmCardType> = [
   {
@@ -172,6 +174,12 @@ export enum AppRoute {
   Film = '/films/:id',
   AddReview = '/films/:id/review',
   Player = '/player/:id'
+}
+
+export enum APIRoute {
+  Films = '/films',
+  Login = '/login',
+  Logout = '/logout'
 }
 
 export enum AuthorizationStatus {
