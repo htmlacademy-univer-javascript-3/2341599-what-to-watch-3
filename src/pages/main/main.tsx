@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Genres, GenresValues } from '../../const';
 import { changeGenre } from '../../store/action';
 import { useState } from 'react';
+import Spinner from '../../components/spinner/spinner';
 
 type StartProps = {
   SelectedFilmItem: SelectedFilmType;
@@ -16,6 +17,7 @@ const lengthSection = 8;
 export default function Start({SelectedFilmItem}: StartProps): JSX.Element {
   const selectedGenre = useAppSelector((state)=>state.genre);
   const filmsList = useAppSelector((state)=>state.films);
+  const isFilmsLoading = useAppSelector((state)=>state.isFilmsDataLoading);
   const filteredFilms = filmsList.filter((moviePreview) =>
     selectedGenre === Genres.All
       ? moviePreview
@@ -78,7 +80,7 @@ export default function Start({SelectedFilmItem}: StartProps): JSX.Element {
                 <a className="catalog__genres-link">{genre}</a>
               </li>))}
           </ul>
-          <FilmList filmsSection={filmsSection} filmsList={filteredFilms}/>
+          {isFilmsLoading ? <FilmList filmsSection={filmsSection} filmsList={filteredFilms}/> : <Spinner/>}
 
           {filmsSection < filteredFilms.length &&
           <div className="catalog__more">
