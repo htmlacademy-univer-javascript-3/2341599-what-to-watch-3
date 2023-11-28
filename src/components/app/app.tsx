@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../const.ts';
 
@@ -13,6 +13,10 @@ import PageNotFound from '../../pages/pageNotFound/pageNotFound.tsx';
 import PrivateRoute from '../privateRoute/privateRoute.tsx';
 import { HelmetProvider } from 'react-helmet-async';
 import { AddReviewFilmType, SeeReviewFilmType } from '../../types/films.ts';
+import { useAppSelector } from '../../hooks/index.ts';
+import Spinner from '../spinner/spinner.tsx';
+import HistoryRouter from '../historyRouter/historyRouter.tsx';
+import { browserHistory } from '../../browserHistory.ts';
 
 type AppProps = {
   CardsFilm: Array<FilmCardType>;
@@ -24,14 +28,20 @@ type AppProps = {
 }
 
 export default function App({CardsFilm, SelectedFilmItem, video, reviewFilm, selectedFilm, seeReviewsFilm} : AppProps) : JSX.Element{
+  const authorizationStatus = useAppSelector((state)=>state.AuthorizationStatus);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown){
+    return <Spinner/>;
+  }
+
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path={AppRoute.Main} element={<Main SelectedFilmItem={SelectedFilmItem}/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn/>}/>
           <Route path={AppRoute.MyList} element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <MyList CardsFilm={CardsFilm}/>
             </PrivateRoute>
           }
@@ -41,7 +51,7 @@ export default function App({CardsFilm, SelectedFilmItem, video, reviewFilm, sel
           <Route path={AppRoute.Player} element={<Player video={video}/>}/>
           <Route path={'*'} element={<PageNotFound/>}/>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
