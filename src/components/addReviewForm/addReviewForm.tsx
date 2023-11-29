@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { addFilmReview } from '../../store/apiActions';
 
-export default function AddReviewForm():JSX.Element{
+type AddReviewFormProps = {
+  id: string;
+}
+
+export default function AddReviewForm({id}:AddReviewFormProps):JSX.Element{
+  const dispatch = useAppDispatch();
 
   const [reviewContent, setReviewContent] = useState({
-    text: '',
+    comment: '',
     rating: 1
   });
 
@@ -15,13 +22,22 @@ export default function AddReviewForm():JSX.Element{
 
   function changeText(e: React.ChangeEvent<HTMLTextAreaElement>):void{
     const newReviewContent = {...reviewContent};
-    newReviewContent.text = e.target.value;
+    newReviewContent.comment = e.target.value;
     setReviewContent(newReviewContent);
   }
 
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(addFilmReview({
+      id,
+      comment: reviewContent.comment,
+      rating: reviewContent.rating
+    }));
+  };
+
   return(
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form onSubmit={handleSubmit} action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
             <input className="rating__input" onChange={changeRating} id="star-10" type="radio" name="rating" value="10" checked={reviewContent.rating === 10}/>
@@ -57,9 +73,9 @@ export default function AddReviewForm():JSX.Element{
         </div>
 
         <div className="add-review__text">
-          <textarea className="add-review__textarea" onChange={changeText} name="review-text" value={reviewContent.text} id="review-text" placeholder="Review text"></textarea>
+          <textarea className="add-review__textarea" onChange={changeText} name="review-text" value={reviewContent.comment} id="review-text" placeholder="Review text"></textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="button">Post</button>
+            <button className="add-review__btn" type="submit">Post</button>
           </div>
         </div>
       </form>

@@ -1,67 +1,51 @@
 import { Helmet } from 'react-helmet-async';
-import { AddReviewFilmType } from '../../../types/films';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../../const';
+import { AppRoute, AuthorizationStatus } from '../../../const';
 import AddReviewForm from '../../../components/addReviewForm/addReviewForm';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { redirectToRoute } from '../../../store/action';
+import Header from '../../../components/header/header';
+import Spinner from '../../../components/spinner/spinner';
+import { useParams } from 'react-router-dom';
 
-type AddReviewProps = {
-  reviewFilm: AddReviewFilmType;
-}
+export default function AddReview(): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.AuthorizationStatus);
+  const authorizationAvatar = useAppSelector((state) => state.authorPreview);
+  const isFilmLoading = useAppSelector((state) => state.isFilmInfoLoading);
+  const film = useAppSelector((state) => state.filmInfo);
+  const dispatch = useAppDispatch();
+  const {id} = useParams();
 
-export default function AddReview({reviewFilm}:AddReviewProps): JSX.Element{
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      dispatch(redirectToRoute(AppRoute.SignIn));
+    }
+  });
+
   return (
     <>
       <Helmet>
         <title>AddReview</title>
       </Helmet>
-      <section className="film-card film-card--full">
-        <div className="film-card__header">
-          <div className="film-card__bg">
-            <img src={reviewFilm.backgroundImage} alt={reviewFilm.title} />
-          </div>
-
-          <h1 className="visually-hidden">WTW</h1>
-
-          <header className="page-header">
-            <div className="logo">
-              <Link to={AppRoute.Main} className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </Link>
+      {!isFilmLoading && film ?
+        <section className="film-card film-card--full">
+          <div className="film-card__header">
+            <div className="film-card__bg">
+              <img src={film.backgroundImage} alt={film.name} />
             </div>
 
-            <nav className="breadcrumbs">
-              <ul className="breadcrumbs__list">
-                <li className="breadcrumbs__item">
-                  <Link to={AppRoute.Film} className="breadcrumbs__link">The Grand Budapest Hotel</Link>
-                </li>
-                <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link">Add review</a>
-                </li>
-              </ul>
-            </nav>
+            <h1 className="visually-hidden">WTW</h1>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
-          </header>
+            <Header authorizationStatus={authorizationStatus} authorAvatar={authorizationAvatar} />
 
-          <div className="film-card__poster film-card__poster--small">
-            <img src={reviewFilm.peviewImage} alt={`${reviewFilm.title} poster`} width="218" height="327" />
+            <div className="film-card__poster film-card__poster--small">
+              <img src={film.posterImage} alt={`${film.name} poster`} width="218" height="327" />
+            </div>
           </div>
-        </div>
-
-        <AddReviewForm/>
-
-      </section>
+          {id && <AddReviewForm id={id}/>}
+        </section>
+        :
+        <Spinner />}
     </>
   );
 }

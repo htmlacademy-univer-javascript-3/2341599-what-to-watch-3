@@ -1,28 +1,23 @@
+type FilmsDetailsProps = {
+  director: string;
+  starring: string[];
+  runTime: number;
+  genre: string;
+  released: number;
+}
 
-
-export default function FilmDetails(){
+export default function FilmDetails({director, starring, runTime, genre, released}:FilmsDetailsProps){
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Director</strong>
-          <span className="film-card__details-value">Wes Anderson</span>
+          <span className="film-card__details-value">{director}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
-            {`Bill Murray,
-            Edward Norton,
-            Jude Law,
-            Willem Dafoe,
-            Saoirse Ronan,
-            Tony Revoloru,
-            Tilda Swinton,
-            Tom Wilkinson,
-            Owen Wilkinson,
-            Adrien Brody,
-            Ralph Fiennes,
-            Jeff Goldblum`}
+            {starring.map((el) => el)}
           </span>
         </p>
       </div>
@@ -30,15 +25,15 @@ export default function FilmDetails(){
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">1h 39m</span>
+          <span className="film-card__details-value">{`${Math.floor(runTime / 60)}h ${runTime % 60}m`}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>
-          <span className="film-card__details-value">Comedy</span>
+          <span className="film-card__details-value">{genre}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Released</strong>
-          <span className="film-card__details-value">2014</span>
+          <span className="film-card__details-value">{released}</span>
         </p>
       </div>
     </div>

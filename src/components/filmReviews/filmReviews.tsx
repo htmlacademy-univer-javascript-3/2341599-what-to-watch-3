@@ -5,7 +5,6 @@ type FilmReviewsProps = {
 }
 
 export default function FilmReviews({ seeReviewsFilm }: FilmReviewsProps): JSX.Element {
-
   const getValidArray = (array: Array<SeeReviewFilmType>) => array.reduce((acc: Array<Array<SeeReviewFilmType>>, curr, index: number): Array<Array<SeeReviewFilmType>> => {
     if (index % 3 === 0) {
       acc.push([curr]);

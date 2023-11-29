@@ -3,12 +3,11 @@ import SelectedFilm from '../../components/selectedFilm/selectedFilm';
 import { SelectedFilmType } from '../../types/main';
 import FilmList from '../../components/filmsList/filmList';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AppRoute, AuthorizationStatus, Genres, GenresValues } from '../../const';
+import { Genres, GenresValues } from '../../const';
 import { changeGenre } from '../../store/action';
 import { useState } from 'react';
 import Spinner from '../../components/spinner/spinner';
-import { Link } from 'react-router-dom';
-import { logoutAction } from '../../store/apiActions';
+import Header from '../../components/header/header';
 
 type StartProps = {
   SelectedFilmItem: SelectedFilmType;
@@ -43,35 +42,7 @@ export default function Start({SelectedFilmItem}: StartProps): JSX.Element {
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
-
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-          {authorizationStatus === AuthorizationStatus.Auth ?
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src={authorAvatar ? authorAvatar : ''} alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a onClick={()=>{
-                  dispatch(logoutAction());
-                }} className="user-block__link"
-                >Sign out
-                </a>
-              </li>
-            </ul>
-            :
-            <div className="user-block">
-              <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
-            </div>}
-        </header>
+        {authorizationStatus && <Header authorizationStatus={authorizationStatus} authorAvatar={authorAvatar}/>}
         {<SelectedFilm name={SelectedFilmItem.name} genre={SelectedFilmItem.genre} posterImage={SelectedFilmItem.posterImage} released={SelectedFilmItem.released}/>}
       </section>
 
