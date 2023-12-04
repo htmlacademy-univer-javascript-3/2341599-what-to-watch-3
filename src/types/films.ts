@@ -26,4 +26,4 @@ export type FilmReview = {
   user: string;
   comment: string;
   rating: number;
-}
+}[]

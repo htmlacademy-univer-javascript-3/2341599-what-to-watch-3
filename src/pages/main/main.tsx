@@ -1,32 +1,21 @@
 import { Helmet } from 'react-helmet-async';
 import SelectedFilm from '../../components/selectedFilm/selectedFilm';
 import { SelectedFilmType } from '../../types/main';
-import FilmList from '../../components/filmsList/filmList';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Genres, GenresValues } from '../../const';
-import { changeGenre } from '../../store/action';
-import { useState } from 'react';
-import Spinner from '../../components/spinner/spinner';
+import { useAppSelector } from '../../hooks';
+import { Genres } from '../../const';
 import Header from '../../components/header/header';
+import { getFilms } from '../../store/filmProcess/selectors';
+import { getAuthorAvatar, getAuthorizationStatus } from '../../store/userProcess/selectors';
+import FilmCatalog from '../../components/filmCatalog/filmCatalog';
 
 type StartProps = {
   SelectedFilmItem: SelectedFilmType;
 }
 
-const lengthSection = 8;
-
 export default function Start({SelectedFilmItem}: StartProps): JSX.Element {
-  const selectedGenre = useAppSelector((state)=>state.genre);
-  const filmsList = useAppSelector((state)=>state.films);
-  const isFilmsLoading = useAppSelector((state)=>state.isFilmsDataLoading);
-  const authorizationStatus = useAppSelector((state)=>state.AuthorizationStatus);
-  const authorAvatar = useAppSelector((state)=>state.authorPreview);
-  const filteredFilms = filmsList.filter((moviePreview) =>
-    selectedGenre === Genres.All
-      ? moviePreview
-      : moviePreview.genre === selectedGenre);
-  const [filmsSection, setFilmsSection] = useState(lengthSection);
-  const dispatch = useAppDispatch();
+  const filmsList = useAppSelector(getFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const authorAvatar = useAppSelector(getAuthorAvatar);
 
   const genres = [...new Set(filmsList.map((film) => film.genre))].sort();
   genres.unshift(Genres.All);
@@ -47,33 +36,7 @@ export default function Start({SelectedFilmItem}: StartProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <ul className="catalog__genres-list">
-            {genres.map((genre) => (
-              <li
-                key={genre}
-                onClick={() => {
-                  dispatch(changeGenre(genre as GenresValues));
-                }}
-                style={{ cursor: 'pointer' }}
-                className={`catalog__genres-item ${selectedGenre === genre ? 'catalog__genres-item--active' : ''}`}
-              >
-                <a className="catalog__genres-link">{genre}</a>
-              </li>))}
-          </ul>
-          {isFilmsLoading ? <FilmList filmsSection={filmsSection} filmsList={filteredFilms}/> : <Spinner/>}
-
-          {filmsSection < filteredFilms.length &&
-          <div className="catalog__more">
-            <button onClick={() => {
-              setFilmsSection(lengthSection + filmsSection);
-            }} className="catalog__button" type="button"
-            >Show more
-            </button>
-          </div>}
-        </section>
+        <FilmCatalog/>
 
         <footer className="page-footer">
           <div className="logo">

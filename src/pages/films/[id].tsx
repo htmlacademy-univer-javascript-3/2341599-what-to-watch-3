@@ -10,18 +10,21 @@ import { fetchFilmInfoAction, fetchFilmReviews, fetchSimilarFilms} from '../../s
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Spinner from '../../components/spinner/spinner';
 import Header from '../../components/header/header';
+import { getAuthorAvatar, getAuthorizationStatus } from '../../store/userProcess/selectors';
+import { getFilmInfo, getFilmInfoLoadStatus, getSimilarFilms } from '../../store/filmProcess/selectors';
+import { getFilmReviews } from '../../store/reviewProcess/selectors';
 
 
 export default function Film(): JSX.Element{
 
   const [pageNow, setPageNow] = useState('Overview');
   const {id} = useParams();
-  const authorizationStatus = useAppSelector((state)=>state.AuthorizationStatus);
-  const authorAvatar = useAppSelector((state)=>state.authorPreview);
-  const film = useAppSelector((state)=>state.filmInfo);
-  const similarFilms = useAppSelector((state)=>state.similarFilms);
-  const filmReviews = useAppSelector((state)=>state.filmReviews);
-  const isFilmLoading = useAppSelector((state)=>state.isFilmInfoLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const authorAvatar = useAppSelector(getAuthorAvatar);
+  const film = useAppSelector(getFilmInfo);
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const filmReviews = useAppSelector(getFilmReviews);
+  const isFilmLoading = useAppSelector(getFilmInfoLoadStatus);
   const dispatch = useAppDispatch();
 
   useEffect(()=> {
@@ -72,7 +75,7 @@ export default function Film(): JSX.Element{
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
-          {authorAvatar && <Header authorizationStatus={authorizationStatus} authorAvatar={authorAvatar}/>}
+          <Header authorizationStatus={authorizationStatus} authorAvatar={authorAvatar}/>
           <div className="film-card__wrap">
             <div className="film-card__desc">
               <h2 className="film-card__title">{film.name}</h2>
