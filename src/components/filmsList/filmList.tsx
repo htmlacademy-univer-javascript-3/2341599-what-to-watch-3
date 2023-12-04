@@ -19,7 +19,7 @@ export default function FilmList({filmsList, filmsSection}:FilmListProps): JSX.E
 
   return (
     <div className="catalog__films-list">
-      {newFilmsList.map((el)=>(<FilmCard key={el.id} id={el.id} isSelected={el.id === selectedFilm} name={el.name} previewImage={el.previewImage} changeSelectedFilm={changeSelectedFilm}/>))}
+      {newFilmsList.map((el)=>(<FilmCard key={el.id} id={el.id} isSelected={el.id === selectedFilm} name={el.name} previewVideo={el.previewVideoLink} previewImage={el.previewImage} changeSelectedFilm={changeSelectedFilm}/>))}
     </div>
   );
 }

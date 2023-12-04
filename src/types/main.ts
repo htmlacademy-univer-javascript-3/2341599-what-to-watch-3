@@ -2,8 +2,8 @@ export type FilmCardType = {
   id: string;
   name: string;
   genre: string;
-  released: number;
   previewImage: string;
+  previewVideoLink: string;
 };
 
 export type SelectedFilmType = {

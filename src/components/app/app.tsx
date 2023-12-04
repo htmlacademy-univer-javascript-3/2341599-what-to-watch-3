@@ -12,7 +12,6 @@ import Player from '../../pages/player/[id].tsx';
 import PageNotFound from '../../pages/pageNotFound/pageNotFound.tsx';
 import PrivateRoute from '../privateRoute/privateRoute.tsx';
 import { HelmetProvider } from 'react-helmet-async';
-import { AddReviewFilmType, SeeReviewFilmType } from '../../types/films.ts';
 import { useAppSelector } from '../../hooks/index.ts';
 import Spinner from '../spinner/spinner.tsx';
 import HistoryRouter from '../historyRouter/historyRouter.tsx';
@@ -22,12 +21,9 @@ type AppProps = {
   CardsFilm: Array<FilmCardType>;
   SelectedFilmItem: SelectedFilmType;
   video: string;
-  reviewFilm: AddReviewFilmType;
-  selectedFilm: SelectedFilmType;
-  seeReviewsFilm: Array<SeeReviewFilmType>;
 }
 
-export default function App({CardsFilm, SelectedFilmItem, video, reviewFilm, selectedFilm, seeReviewsFilm} : AppProps) : JSX.Element{
+export default function App({CardsFilm, SelectedFilmItem, video} : AppProps) : JSX.Element{
   const authorizationStatus = useAppSelector((state)=>state.AuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown){
@@ -46,8 +42,8 @@ export default function App({CardsFilm, SelectedFilmItem, video, reviewFilm, sel
             </PrivateRoute>
           }
           />
-          <Route path={AppRoute.Film} element={<Film selectedFilm={selectedFilm} seeReviewsFilm={seeReviewsFilm}/>}/>
-          <Route path={AppRoute.AddReview} element={<AddReview reviewFilm={reviewFilm} />}/>
+          <Route path={AppRoute.Film} element={<Film/>}/>
+          <Route path={AppRoute.AddReview} element={<AddReview/>}/>
           <Route path={AppRoute.Player} element={<Player video={video}/>}/>
           <Route path={'*'} element={<PageNotFound/>}/>
         </Routes>
