@@ -59,4 +59,12 @@ export const Genres = {
   Thrillers: 'Thrillers',
 };
 
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+  Film = 'FILM',
+  Genre = 'GENRE',
+  Review = 'REVIEW'
+}
+
 export type GenresValues = keyof typeof Genres;

@@ -2,26 +2,44 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { loginAction } from '../../store/apiActions';
 import { AuthData } from '../../types/user';
 
 export default function SignIn(): JSX.Element {
   const dispatch = useAppDispatch();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
 
+  const containsAnyLetters = (password: string) => /[a-zA-Z]/.test(password);
+
+  const containsAnyNumbers = (password: string) => /[0-9]/.test(password);
+
+  const isValidEmail = (email: string) => /^\S+@\S+\.\S+$/.test(email);
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value
-      });
+      if (!isValidEmail(loginRef.current.value)) {
+        setErrorMessage('Please enter a valid email address');
+      } else if (
+        !containsAnyLetters(passwordRef.current.value) ||
+        !containsAnyNumbers(passwordRef.current.value)
+      ) {
+        setErrorMessage('Password should contain at least one letter and one number');
+      } else {
+        onSubmit({
+          login: loginRef.current.value,
+          password: passwordRef.current.value
+        });
+      }
     }
   };
 
@@ -45,13 +63,18 @@ export default function SignIn(): JSX.Element {
 
         <div className="sign-in user-page__content">
           <form onSubmit={handleSubmit} action="#" className="sign-in__form">
+            {errorMessage && (
+              <div className="sign-in__message">
+                <p>{errorMessage}</p>
+              </div>
+            )}
             <div className="sign-in__fields">
               <div className="sign-in__field">
-                <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email"/>
+                <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
               <div className="sign-in__field">
-                <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password"/>
+                <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
                 <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
               </div>
             </div>
@@ -63,7 +86,7 @@ export default function SignIn(): JSX.Element {
 
         <footer className="page-footer">
           <div className="logo">
-            <Link to={AppRoute.Main}className="logo__link logo__link--light">
+            <Link to={AppRoute.Main} className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>

@@ -1,23 +1,23 @@
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import VideoPlayer from '../videoPlayer/videoPlayer';
+import { useState } from 'react';
 
 type FilmCardProps = {
   name: string;
   previewImage: string;
   id: string;
-  changeSelectedFilm: (id: string)=> void;
-  isSelected: boolean;
   previewVideo: string;
 }
 
-export default function FilmCard({name, previewImage, id, changeSelectedFilm, isSelected, previewVideo} : FilmCardProps) : JSX.Element{
+export default function FilmCard({name, previewImage, id, previewVideo} : FilmCardProps) : JSX.Element{
+  const [isSelected, setIsSelected] = useState(false);
   return (
     <article onMouseOver={() => {
-      changeSelectedFilm(id);
+      setIsSelected(true);
     }}
     onMouseLeave={() => {
-      changeSelectedFilm('');
+      setIsSelected(false);
     }} className="small-film-card catalog__films-card"
     >
       <div className="small-film-card__image">
