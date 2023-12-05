@@ -1,10 +1,10 @@
-export type AddReviewFilmType = {
+export type AddReviewFilm = {
   id: string;
   rating: number;
   comment: string;
 };
 
-export type SeeReviewFilmType = {
+export type SeeReviewFilm = {
   id: string;
   date: string;
   user: string;

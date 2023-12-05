@@ -1,16 +1,14 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { AuthorizationStatus } from '../../const';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/apiActions';
+import { getAuthorAvatar, getAuthorizationStatus } from '../../store/userProcess/selectors';
 
-type HeaderProps= {
-  authorizationStatus: AuthorizationStatus;
-  authorAvatar: string | null;
-}
-
-export default function Header({authorizationStatus, authorAvatar}:HeaderProps):JSX.Element {
+export default function Header():JSX.Element {
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const authorAvatar = useAppSelector(getAuthorAvatar);
   const logOut = ()=>{
     dispatch(logoutAction());
   };
@@ -18,11 +16,11 @@ export default function Header({authorizationStatus, authorAvatar}:HeaderProps):
   return (
     <header className="page-header film-card__head">
       <div className="logo">
-        <a className="logo__link">
+        <Link to={AppRoute.Main} className="logo__link">
           <span className="logo__letter logo__letter--1">W</span>
           <span className="logo__letter logo__letter--2">T</span>
           <span className="logo__letter logo__letter--3">W</span>
-        </a>
+        </Link>
       </div>
       {authorizationStatus === AuthorizationStatus.Auth ?
         <ul className="user-block">

@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { SelectedFilmItem } from './const';
-import { CardsFilm } from './mocks/films';
-import { videoSrc } from './mocks/video';
 import { checkAuthAction, fetchFilmsAction } from './store/apiActions';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -21,7 +18,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer/>
-      <App SelectedFilmItem={SelectedFilmItem} CardsFilm={CardsFilm} video={videoSrc}/>
+      <App />
     </Provider>
   </React.StrictMode>
 );
