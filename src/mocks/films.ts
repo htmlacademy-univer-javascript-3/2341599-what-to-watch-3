@@ -1,6 +1,6 @@
-import { FilmCard, PromoFilm } from '../types/main';
+import { FilmPreview, PromoFilm } from '../types/main';
 
-export const CardsFilm: Array<FilmCard> = [
+export const CardsFilm: Array<FilmPreview> = [
   {
     id: '1',
     name: 'Fantastic Beasts: The Crimes of Grindelwald',

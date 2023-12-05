@@ -1,8 +1,9 @@
-import { FilmCardType } from '../../types/main';
+import { FilmPreview } from '../../types/main';
 import FilmCard from '../filmCard/filmCard';
 
+
 type FilmListProps = {
-  filmsList: Array<FilmCardType>;
+  filmsList: FilmPreview[];
   filmsSection: number;
 }
 

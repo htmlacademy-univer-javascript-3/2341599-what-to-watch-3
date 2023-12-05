@@ -1,9 +1,9 @@
 import { NameSpace } from '../../const';
 import { SimilarFilm } from '../../types/films';
-import { FilmCard, PromoFilm } from '../../types/main';
+import { FilmPreview, PromoFilm } from '../../types/main';
 import { State } from '../../types/state';
 
-export const getFilms = (state: State): FilmCard[] =>
+export const getFilms = (state: State): FilmPreview[] =>
   state[NameSpace.Film].films;
 
 export const getFilmInfo = (state: State): PromoFilm | null =>
@@ -30,5 +30,5 @@ export const getPromoFilm = (state: State): PromoFilm | null =>
 export const getMyListLoadStatus = (state: State): boolean =>
   state[NameSpace.Film].isMyListLoading;
 
-export const getMyList = (state: State): FilmCard[] =>
+export const getMyList = (state: State): FilmPreview[] =>
   state[NameSpace.Film].myList;

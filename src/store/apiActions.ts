@@ -1,17 +1,17 @@
 import { AxiosInstance } from 'axios';
 import { AppDispatch, State } from './../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ChangeFilmStatus, FilmCard, PromoFilm } from '../types/main';
+import { ChangeFilmStatus, FilmPreview, PromoFilm } from '../types/main';
 import { APIRoute, AppRoute } from '../const';
 import { redirectToRoute } from './action';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData, UserInfo } from '../types/user';
 import { AddReviewFilm, FilmReview, SimilarFilm } from '../types/films';
 
-export const fetchFilmsAction = createAsyncThunk<FilmCard[], undefined, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
+export const fetchFilmsAction = createAsyncThunk<FilmPreview[], undefined, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
   'film/fetchFilms',
   async (_arg, {extra: api}) => {
-    const {data} = await api.get<FilmCard[]>(APIRoute.Films);
+    const {data} = await api.get<FilmPreview[]>(APIRoute.Films);
     return data;
   },
 );
@@ -40,10 +40,10 @@ export const fetchSimilarFilms = createAsyncThunk<SimilarFilm[], string, { dispa
   },
 );
 
-export const fetchMyList = createAsyncThunk<FilmCard[], undefined, { dispatch: AppDispatch; extra: AxiosInstance }>(
+export const fetchMyList = createAsyncThunk<FilmPreview[], undefined, { dispatch: AppDispatch; extra: AxiosInstance }>(
   'film/getMyList',
   async (_arg, {extra: api}) => {
-    const {data} = await api.get<FilmCard[]>(APIRoute.Favorite);
+    const {data} = await api.get<FilmPreview[]>(APIRoute.Favorite);
     return data;
   }
 );

@@ -1,11 +1,11 @@
-import { SeeReviewFilmType } from '../../types/films';
+import { SeeReviewFilm } from '../../types/films';
 
 type FilmReviewsProps = {
-  seeReviewsFilm: Array<SeeReviewFilmType>;
+  seeReviewsFilm: Array<SeeReviewFilm>;
 }
 
 export default function FilmReviews({ seeReviewsFilm }: FilmReviewsProps): JSX.Element {
-  const getValidArray = (array: Array<SeeReviewFilmType>) => array.reduce((acc: Array<Array<SeeReviewFilmType>>, curr, index: number): Array<Array<SeeReviewFilmType>> => {
+  const getValidArray = (array: Array<SeeReviewFilm>) => array.reduce((acc: Array<Array<SeeReviewFilm>>, curr, index: number): Array<Array<SeeReviewFilm>> => {
     if (index % 3 === 0) {
       acc.push([curr]);
     } else {

@@ -1,4 +1,4 @@
-export type FilmCard = {
+export type FilmPreview = {
   id: string;
   name: string;
   genre: string;
