@@ -1,10 +1,10 @@
-import { FilmCardType } from '../types/main';
+import { FilmCard } from '../types/main';
 
-export function getFlimsOfGenre(filmList:Array<FilmCardType>, genre:string): Array<FilmCardType>{
+export function getFlimsOfGenre(filmList:Array<FilmCard>, genre:string): Array<FilmCard>{
   if (genre === 'All'){
     return filmList;
   }
-  const result: Array<FilmCardType> = [];
+  const result: Array<FilmCard> = [];
   filmList.forEach((element)=>{
     if (element.genre === genre){
       result.push(element);
