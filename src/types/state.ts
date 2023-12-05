@@ -1,6 +1,6 @@
 import { AuthorizationStatus } from './../const';
 import { store } from '../store';
-import { FilmCardType, SelectedFilmType } from './main';
+import { FilmPreview, PromoFilm } from './main';
 import { FilmReview, SimilarFilm } from './films';
 
 export type State = ReturnType<typeof store.getState>;
@@ -13,13 +13,17 @@ export type UserProcess = {
 }
 
 export type FilmProcess = {
-  films: FilmCardType[];
-  filmInfo: SelectedFilmType | null;
+  films: FilmPreview[];
+  filmInfo: PromoFilm | null;
   similarFilms: SimilarFilm[];
+  promoFilm: PromoFilm | null;
+  myList: FilmPreview[];
   isFilmsDataLoading: boolean;
   isFilmInfoLoading: boolean;
   isSimilarFilmsLoading: boolean;
   hasError: boolean;
+  isPromoFilmLoading: boolean;
+  isMyListLoading: boolean;
 }
 
 export type GenreProcess = {

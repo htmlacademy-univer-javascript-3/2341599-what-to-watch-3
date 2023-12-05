@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const.ts';
 
 import Main from '../../pages/main/main';
-import { FilmCardType, SelectedFilmType } from '../../types/main.ts';
 import SignIn from '../../pages/login/login.tsx';
 import MyList from '../../pages/myList/myList.tsx';
 import Film from '../../pages/films/[id].tsx';
@@ -18,13 +17,7 @@ import HistoryRouter from '../historyRouter/historyRouter.tsx';
 import { browserHistory } from '../../browserHistory.ts';
 import { getAuthorizationStatus } from '../../store/userProcess/selectors.ts';
 
-type AppProps = {
-  CardsFilm: Array<FilmCardType>;
-  SelectedFilmItem: SelectedFilmType;
-  video: string;
-}
-
-export default function App({CardsFilm, SelectedFilmItem, video} : AppProps) : JSX.Element{
+export default function App() : JSX.Element{
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   if (authorizationStatus === AuthorizationStatus.Unknown){
     return <Spinner/>;
@@ -34,17 +27,17 @@ export default function App({CardsFilm, SelectedFilmItem, video} : AppProps) : J
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route path={AppRoute.Main} element={<Main SelectedFilmItem={SelectedFilmItem}/>}/>
+          <Route path={AppRoute.Main} element={<Main/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn/>}/>
           <Route path={AppRoute.MyList} element={
             <PrivateRoute authorizationStatus={authorizationStatus}>
-              <MyList CardsFilm={CardsFilm}/>
+              <MyList />
             </PrivateRoute>
           }
           />
           <Route path={AppRoute.Film} element={<Film/>}/>
           <Route path={AppRoute.AddReview} element={<AddReview/>}/>
-          <Route path={AppRoute.Player} element={<Player video={video}/>}/>
+          <Route path={AppRoute.Player} element={<Player />}/>
           <Route path={'*'} element={<PageNotFound/>}/>
         </Routes>
       </HistoryRouter>

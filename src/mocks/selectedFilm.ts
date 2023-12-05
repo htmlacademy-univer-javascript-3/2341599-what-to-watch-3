@@ -1,6 +1,6 @@
-import { SelectedFilmType } from '../types/main';
+import { PromoFilm} from '../types/main';
 
-export const SelectedFilmItem: SelectedFilmType = { // film in header from API
+export const SelectedFilmItem: PromoFilm = { // film in header from API
   id: 'aba664c3-bdf3-4fb3-b8f3-42e007864bbf',
   name: 'The Grand Budapest Hotel',
   posterImage: 'img/the-grand-budapest-hotel-poster.jpg',
