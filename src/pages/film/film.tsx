@@ -6,7 +6,7 @@ import FilmDetails from '../../components/film-details/film-details';
 import FilmReviews from '../../components/film-reviews/film-reviews';
 import { useState, useEffect } from 'react';
 import FilmList from '../../components/films-list/film-list';
-import { fetchChangeFilmStatus, fetchFilmInfoAction, fetchFilmReviews, fetchSimilarFilms } from '../../store/api-actions';
+import { fetchChangeFilmStatus, fetchFilmInfoAction, fetchFilmReviews, fetchMyList, fetchSimilarFilms } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Spinner from '../../components/spinner/spinner';
 import Header from '../../components/header/header';
@@ -30,14 +30,19 @@ export default function Film(): JSX.Element {
   const isSimilarFilmsLoading = useAppSelector(getSimilarFilmsLoadStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [newFilmLength, setNewFilmLength] = useState(filmlist.length);
+  const [newIsFavorite, setNewIsFavorite] = useState(film?.isFavorite);
 
   useEffect(() => {
     if (id) {
       dispatch(fetchSimilarFilms(id));
       dispatch(fetchFilmReviews(id));
       dispatch(fetchFilmInfoAction(id));
+      dispatch(fetchMyList());
+      setNewFilmLength(filmlist.length);
+      setNewIsFavorite(film?.isFavorite);
     }
-  }, [dispatch, id]);
+  }, [dispatch, film?.isFavorite, filmlist.length, id]);
 
   const getPage = () => {
     if (pageNow === 'Overview' && film) {
@@ -85,11 +90,12 @@ export default function Film(): JSX.Element {
                     <span>Play</span>
                   </button>
                   <button className="btn btn--list film-card__button" type="button" onClick={() => {
-                    dispatch(fetchChangeFilmStatus({ id: film.id, status: Number(!film.isFavorite) }));
-                    navigate(AppRoute.MyList);
+                    dispatch(fetchChangeFilmStatus({ id: film.id, status: Number(!newIsFavorite) }));
+                    setNewIsFavorite(!newIsFavorite);
+                    setNewFilmLength(newIsFavorite ? newFilmLength - 1 : newFilmLength + 1);
                   }}
                   >
-                    {film.isFavorite ?
+                    {newIsFavorite ?
                       <svg width="18" height="14" viewBox="0 0 18 14">
                         <use xlinkHref="#in-list"></use>
                       </svg> :
@@ -97,7 +103,7 @@ export default function Film(): JSX.Element {
                         <use xlinkHref="#add"></use>
                       </svg>}
                     <span>My list</span>
-                    <span className="film-card__count">{filmlist.length}</span>
+                    <span className="film-card__count">{newFilmLength}</span>
                   </button>
                   {authorizationStatus === AuthorizationStatus.Auth && id && <Link to={generatePath(AppRoute.AddReview, { id: id })} className="btn film-card__button">Add review</Link>}
                 </div>
