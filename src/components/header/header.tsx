@@ -31,7 +31,7 @@ export default function Header():JSX.Element {
             </div>
           </li>
           <li className="user-block__item">
-            <a onClick={logOut} className="user-block__link">Sign out</a>
+            <a data-testid="logOut" onClick={logOut} className="user-block__link">Sign out</a>
           </li>
         </ul>
         :
