@@ -1,13 +1,13 @@
 import { Helmet } from 'react-helmet-async';
-import SelectedFilm from '../../components/selectedFilm/selectedFilm';
+import SelectedFilm from '../../components/selected-film/selected-film';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Genres } from '../../const';
 import Header from '../../components/header/header';
-import { getFilms, getPromoFilm, getPromoFilmLoadStatus } from '../../store/filmProcess/selectors';
-import FilmCatalog from '../../components/filmCatalog/filmCatalog';
+import { getFilms, getPromoFilm, getPromoFilmLoadStatus } from '../../store/film-process/selectors';
+import FilmCatalog from '../../components/film-catalog/film-catalog';
 import Spinner from '../../components/spinner/spinner';
 import { useEffect } from 'react';
-import { fetchPromoFilm } from '../../store/apiActions';
+import { fetchPromoFilm } from '../../store/api-actions';
 import Footer from '../../components/footer/footer';
 
 export default function Start(): JSX.Element {
@@ -33,7 +33,7 @@ export default function Start(): JSX.Element {
       </Helmet>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
+          <img data-testid={`${promoFilm.backgroundImage}`} src={promoFilm.backgroundImage} alt={promoFilm.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
