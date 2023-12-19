@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { FormEvent, useRef, useState } from 'react';
-import { loginAction } from '../../store/apiActions';
+import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/user';
 import Footer from '../../components/footer/footer';
 
@@ -27,7 +27,7 @@ export default function SignIn(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current && passwordRef.current) {
       if (!isValidEmail(loginRef.current.value)) {
         setErrorMessage('Please enter a valid email address');
       } else if (
@@ -63,7 +63,7 @@ export default function SignIn(): JSX.Element {
         </header>
 
         <div className="sign-in user-page__content">
-          <form onSubmit={handleSubmit} action="#" className="sign-in__form">
+          <form onSubmit={handleSubmit} action="#" className="sign-in__form" noValidate>
             {errorMessage && (
               <div className="sign-in__message">
                 <p>{errorMessage}</p>
@@ -71,11 +71,11 @@ export default function SignIn(): JSX.Element {
             )}
             <div className="sign-in__fields">
               <div className="sign-in__field">
-                <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
+                <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" required/>
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
               <div className="sign-in__field">
-                <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
+                <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" required/>
                 <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
               </div>
             </div>

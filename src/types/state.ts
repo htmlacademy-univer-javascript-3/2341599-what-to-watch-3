@@ -21,7 +21,6 @@ export type FilmProcess = {
   isFilmsDataLoading: boolean;
   isFilmInfoLoading: boolean;
   isSimilarFilmsLoading: boolean;
-  hasError: boolean;
   isPromoFilmLoading: boolean;
   isMyListLoading: boolean;
 }

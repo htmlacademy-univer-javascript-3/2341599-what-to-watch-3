@@ -1,19 +1,18 @@
 export const TIMEOUT_SHOW_ERROR = 2000;
 
-export enum AppRoute {
-  Main = '/',
-  SignIn = '/login',
-  MyList = '/mylist',
-  Film = '/films/:id',
-  AddReview = '/films/:id/review',
-  Player = '/player/:id',
-  PageNotFound = '/pageNotFound'
-}
+export const AppRoute = {
+  Main: '/',
+  SignIn: '/login',
+  MyList: '/mylist',
+  Film: '/films/:id',
+  AddReview: '/films/:id/review',
+  Player: '/player/:id',
+  PageNotFound: '/pageNotFound'
+};
 
 export enum APIRoute {
   Films = '/films',
   Login = '/login',
-  Logout = '/logout',
   Comments = '/comments',
   Promo = '/promo',
   Favorite = '/favorite',
