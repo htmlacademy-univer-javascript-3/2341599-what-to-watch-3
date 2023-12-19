@@ -3,11 +3,11 @@ import SelectedFilm from '../../components/selected-film/selected-film';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Genres } from '../../const';
 import Header from '../../components/header/header';
-import { getFilms, getPromoFilm, getPromoFilmLoadStatus } from '../../store/film-process/selectors';
+import { getFilms, getMyList, getMyListLoadStatus, getPromoFilm, getPromoFilmLoadStatus } from '../../store/film-process/selectors';
 import FilmCatalog from '../../components/film-catalog/film-catalog';
 import Spinner from '../../components/spinner/spinner';
 import { useEffect } from 'react';
-import { fetchPromoFilm } from '../../store/api-actions';
+import { fetchMyList, fetchPromoFilm } from '../../store/api-actions';
 import Footer from '../../components/footer/footer';
 
 export default function Start(): JSX.Element {
@@ -16,13 +16,16 @@ export default function Start(): JSX.Element {
   genres.unshift(Genres.All);
   const isPromoFilmLoading = useAppSelector(getPromoFilmLoadStatus);
   const promoFilm = useAppSelector(getPromoFilm);
+  const myList = useAppSelector(getMyList);
+  const myListLoadingStatus = useAppSelector(getMyListLoadStatus);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchPromoFilm());
+    dispatch(fetchMyList());
   }, [dispatch]);
 
-  if (isPromoFilmLoading || !promoFilm){
+  if (isPromoFilmLoading || !promoFilm || myListLoadingStatus){
     return <Spinner/>;
   }
 
@@ -38,7 +41,7 @@ export default function Start(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
         <Header/>
-        {<SelectedFilm isFavorite={promoFilm.isFavorite} name={promoFilm.name} genre={promoFilm.genre} posterImage={promoFilm.posterImage} released={promoFilm.released} id={promoFilm.id}/>}
+        {<SelectedFilm myListLength={myList.length} isFavorite={promoFilm.isFavorite} name={promoFilm.name} genre={promoFilm.genre} posterImage={promoFilm.posterImage} released={promoFilm.released} id={promoFilm.id}/>}
       </section>
 
       <div className="page-content">

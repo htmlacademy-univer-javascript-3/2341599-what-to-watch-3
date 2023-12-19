@@ -1,6 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { getMyList } from '../../store/film-process/selectors';
 import ChangeFavoriteButton from '../change-favorite-button/change-favorite-button';
 
 type SelectedFilmProps = {
@@ -10,11 +8,12 @@ type SelectedFilmProps = {
   genre: string;
   released: number;
   posterImage: string;
+  myListLength: number;
 }
 
-export default function SelectedFilm({ name, genre, released, posterImage, id, isFavorite }: SelectedFilmProps): JSX.Element {
+export default function SelectedFilm({ name, genre, released, posterImage, id, isFavorite, myListLength }: SelectedFilmProps): JSX.Element {
   const navigate = useNavigate();
-  const filmList = useAppSelector(getMyList);
+
   return (
     <div className="film-card__wrap">
       <div className="film-card__info">
@@ -36,7 +35,7 @@ export default function SelectedFilm({ name, genre, released, posterImage, id, i
               </svg>
               <span>Play</span>
             </button>
-            <ChangeFavoriteButton id={id} isFavorite={isFavorite ? isFavorite : false} filmLength={filmList.length}/>
+            <ChangeFavoriteButton id={id} isFavorite={isFavorite ? isFavorite : false} filmLength={myListLength}/>
           </div>
         </div>
       </div>

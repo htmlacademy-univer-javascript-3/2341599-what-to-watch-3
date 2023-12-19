@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -12,6 +12,7 @@ export default function Header():JSX.Element {
   const logOut = ()=>{
     dispatch(logoutAction());
   };
+  const navigate = useNavigate();
 
   return (
     <header className="page-header film-card__head">
@@ -24,7 +25,7 @@ export default function Header():JSX.Element {
       </div>
       {authorizationStatus === AuthorizationStatus.Auth ?
         <ul className="user-block">
-          <li className="user-block__item">
+          <li onClick={() => navigate(AppRoute.MyList)} className="user-block__item">
             <div className="user-block__avatar">
               <img src={authorAvatar ? authorAvatar : ''} alt="User avatar" width="63" height="63" />
             </div>

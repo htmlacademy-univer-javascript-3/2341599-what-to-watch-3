@@ -3,7 +3,7 @@ import FilmList from '../../components/films-list/film-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getMyList, getMyListLoadStatus } from '../../store/film-process/selectors';
 import { useEffect } from 'react';
-import { fetchMyList } from '../../store/api-actions';
+import { fetchMyList, logoutAction } from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import Footer from '../../components/footer/footer';
 import { AppRoute } from '../../const';
@@ -45,7 +45,10 @@ export default function MyList(): JSX.Element{
                 <img src={authorAvatar ? authorAvatar : ''} alt="User avatar" width="63" height="63" />
               </div>
             </li>
-            <li className="user-block__item">
+            <li onClick={() => {
+              dispatch(logoutAction());
+            }} className="user-block__item"
+            >
               <a className="user-block__link">Sign out</a>
             </li>
           </ul>
