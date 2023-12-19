@@ -30,8 +30,8 @@ export default function Header():JSX.Element {
               <img src={authorAvatar ? authorAvatar : ''} alt="User avatar" width="63" height="63" />
             </div>
           </li>
-          <li data-testid="logOut" className="user-block__item">
-            <a onClick={logOut} className="user-block__link">Sign out</a>
+          <li className="user-block__item">
+            <a data-testid="logOut" onClick={logOut} className="user-block__link">Sign out</a>
           </li>
         </ul>
         :
